@@ -1,16 +1,18 @@
 package main
 
 import (
+	"awesomeProject/student"
 	"awesomeProject/teacher"
 	"awesomeProject/utils"
 	"fmt"
 )
 
-func main() {
+func MenuManagement() {
 	for {
 		utils.ClearScreen()
+
 		fmt.Println("📔 CHUONG TRINH QUAN LY")
-		fmt.Println("🧑‍🎓1.QUAN LY SINH VIEN")
+		fmt.Println("🎓1.QUAN LY SINH VIEN")
 		fmt.Println("🧙2.QUAN LY GIANG VIEN")
 		fmt.Println("◀️3.THOAT")
 
@@ -18,15 +20,22 @@ func main() {
 
 		switch chose {
 		case "1":
-			teacher.StudentMenu()
+			student.StudentMenu()
+			continue
 		case "2":
-			fmt.Println("quan giang vien")
+			teacher.TeacherMenu()
+			continue
 		case "3":
 			return
 		default:
+
 			fmt.Println("⛔Ban da nhap sai! Vui long nhap lai!")
 		}
 		utils.ReadInput("Nhan Enter de tiep tuc ....")
 	}
+}
+
+func main() {
+	MenuManagement()
 
 }
