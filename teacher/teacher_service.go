@@ -5,23 +5,94 @@ import (
 	"fmt"
 )
 
+var teachers []Teacher
+
 func addTeacher() {
-	fmt.Println("Them sinh vien")
+	fmt.Println("=======THÊM GIẢNG VIÊN==========")
+	var id int
+	for {
+		id = utils.GetPositiveInt("Nhập id : ")
+		if utils.IsContainId(id, teachers) {
+			break
+		}
+		fmt.Println("⛔Id đã tồn tại! Vui lòng nhập Id khác!")
+	}
+
+	name := utils.GetNoneEmptyStr("Nhập tên : ")
+	subject := utils.GetNoneEmptyStr("Nhập môn dạy : ")
+	baseSalary := utils.GetPositiveFl("Nhập lương cơ bản : ")
+	bonus := utils.GetPositiveFl("Nhập tiền thưởng : ")
+
+	teacher := Teacher{
+		Id:         id,
+		Name:       name,
+		Subject:    subject,
+		BaseSalary: baseSalary,
+		Bonus:      bonus,
+	}
+	teachers = append(teachers, teacher)
+	fmt.Println("✅Thêm giảng viên thành công!")
+
 }
 func editTeacher() {
-	fmt.Println("Sua sinh vien")
+	fmt.Println("=======SỬA GIẢNG VIÊN==========")
+	id := utils.GetPositiveInt("Nhập id giảng viên cần sửa :")
+	for i, teacher := range teachers {
+		if teacher.Id == id {
+			name := utils.GetOptionalString(fmt.Sprintf("Nhập tên giảng viên cần sửa (%s) : ", teacher.Name), teacher.Name)
+			subject := utils.GetOptionalString(fmt.Sprintf("Nhập môn học cần sửa (%s) : ", teacher.Subject), teacher.Subject)
+			baseSalary := utils.GetOptionalFloat(fmt.Sprintf("Nhập lương cơ bản cần sửa (%.2f) : ", teacher.BaseSalary), teacher.BaseSalary)
+			bonus := utils.GetOptionalFloat(fmt.Sprintf("Nhập tiền thưởng cần sửa (%.2f) : ", teacher.Bonus), teacher.Bonus)
+
+			teachers[i] = Teacher{
+				Id:         id,
+				Name:       name,
+				Subject:    subject,
+				BaseSalary: baseSalary,
+				Bonus:      bonus,
+			}
+			fmt.Println("✅Cập nhật giảng viên thành công!")
+			return
+		}
+
+	}
+	fmt.Println("⛔Không tìm thấy ID của giảng viên cần sửa!")
+
 }
 func deleteTeacher() {
-	fmt.Println("Xoa sinh vien")
+	fmt.Println("=======XÓA GIẢNG VIÊN==========")
+	id := utils.GetPositiveInt("Nhập ID của giảng viên cần xóa : ")
+	for i, teacher := range teachers {
+		if teacher.Id == id {
+			teachers = append(teachers[:i], teachers[i+1:]...)
+			return
+		}
+	}
+	fmt.Println("⛔ID giảng viên không có trong danh sách!")
 }
 func findTeacher() {
-	fmt.Println("Tim sinh vien")
+	fmt.Println("=======TÌM GIẢNG VIÊN==========")
+	id := utils.GetPositiveInt("Nhập ID của giảng viên cần tìm : ")
+	for _, teacher := range teachers {
+		if teacher.Id == id {
+			teacher.GetInfo()
+			return
+		}
+	}
+	fmt.Println("⛔ID giảng viên không có trong danh sách!")
 }
 func listTeacher() {
-	fmt.Println("Danh sach sinh vien")
+	fmt.Println("=======DANH SÁCH GIẢNG VIÊN==========")
+	if teachers == nil {
+		fmt.Println("DANH SÁCH GIẢNG VIÊN RỖNG!")
+		return
+	}
+	for _, val := range teachers {
+		val.GetInfo()
+	}
 }
 
-func TeacherMenu() {
+func MenuTeacher() {
 	for {
 		utils.ClearScreen()
 		fmt.Println("==========QUẢN LÝ GIẢNG VIÊN===========")
@@ -47,8 +118,8 @@ func TeacherMenu() {
 		case "6":
 			return
 		default:
-			fmt.Println("⛔Ban da nhap sai! Vui long nhap lai!")
+			fmt.Println("⛔Bạn đã nhập sai! Vui lòng nhập lại!")
 		}
-		utils.ReadInput("Nhan Enter de tiep tuc ....")
+		utils.ReadInput("Nhấn Enter để tiếp tục.....")
 	}
 }

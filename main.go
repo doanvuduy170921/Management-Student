@@ -11,27 +11,27 @@ func MenuManagement() {
 	for {
 		utils.ClearScreen()
 
-		fmt.Println("📔 CHUONG TRINH QUAN LY")
-		fmt.Println("🎓1.QUAN LY SINH VIEN")
-		fmt.Println("🧙2.QUAN LY GIANG VIEN")
-		fmt.Println("◀️3.THOAT")
+		fmt.Println("📔 CHƯƠNG TRÌNH QUẢN LÝ")
+		fmt.Println("🎓1.QUẢN LÝ SINH VIÊN")
+		fmt.Println("🧙2.QUẢN LÝ GIẢNG VIÊN")
+		fmt.Println("◀️3.THOÁT")
 
-		chose := utils.ReadInput("CHON CHUC NANG:")
+		chose := utils.ReadInput("CHỌN CHỨC NĂNG:")
 
 		switch chose {
 		case "1":
-			student.StudentMenu()
+			student.Menu()
 			continue
 		case "2":
-			teacher.TeacherMenu()
+			teacher.MenuTeacher()
 			continue
 		case "3":
 			return
 		default:
 
-			fmt.Println("⛔Ban da nhap sai! Vui long nhap lai!")
+			fmt.Println("⛔Bạn đã nhập sai! Vui lòng nhập lại!")
 		}
-		utils.ReadInput("Nhan Enter de tiep tuc ....")
+		utils.ReadInput("Nhấn Enter để tiếp tục.....")
 	}
 }
 
